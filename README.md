@@ -1,2 +1,3 @@
-# any
-Helper functions for handling data of type any in Go.
+# types
+
+Helper functions for handling the native types of Go.
