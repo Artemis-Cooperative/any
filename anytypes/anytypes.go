@@ -4,6 +4,14 @@ import (
 	"reflect"
 )
 
+func Equals(v1 any, v2 any) bool {
+	return reflect.DeepEqual(v1, v2)
+}
+
+func TypeEquals(v1 any, v2 any) bool {
+	return reflect.TypeOf(v1) == reflect.TypeOf(v2)
+}
+
 // Return true if the value given is an array. Else, false.
 func IsArray(v any) bool {
 	return isOfReflectKind(v, reflect.Array)
