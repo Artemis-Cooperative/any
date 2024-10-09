@@ -15,11 +15,22 @@ func Concat[T any](slices ...[]T) []T {
 	return concatenated
 }
 
+// Return a sequential list of indexes based on the length of the slice given
+func Indexes[T any](slice []T) []int {
+	return intslices.Seq(0, len(slice)-1)
+}
+
+// Prepend the item given to the slice given
+func Prepend[T any](slice []T, item T) []T {
+	return append([]T{item}, slice...)
+}
+
 // Remove an element from the slice by its index
 func Remove[T any](slice []T, i int) []T {
 	return append(slice[:i], slice[(i+1):]...)
 }
 
+// Remove all empty slices from the 2D slice given
 func RemoveEmpty[T any](slices [][]T) [][]T {
 	emptyIndexes := []int{}
 
@@ -38,6 +49,7 @@ func RemoveEmpty[T any](slices [][]T) [][]T {
 	return slices
 }
 
+// Reverse the slice given
 func Reverse[T any](slice []T) []T {
 	reversed := []T{}
 
@@ -48,10 +60,7 @@ func Reverse[T any](slice []T) []T {
 	return reversed
 }
 
-func Prepend[T any](slice []T, item T) []T {
-	return append([]T{item}, slice...)
-}
-
+// Remove the first element from the slice given
 func Shift[T any](slice []T) []T {
 	switch len(slice) {
 	case 0:
@@ -61,8 +70,4 @@ func Shift[T any](slice []T) []T {
 	default:
 		return slice[1:]
 	}
-}
-
-func Indexes[T any](slice []T) []int {
-	return intslices.Seq(0, len(slice)-1)
 }

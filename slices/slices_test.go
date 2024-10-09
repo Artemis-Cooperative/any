@@ -7,6 +7,8 @@ import (
 	strslices "github.com/Artemis-Cooperative/types/strslices"
 )
 
+//region Concat
+
 func TestConcat(t *testing.T) {
 	slices := [][]string{{"a", "b"}, {"c", "d"}, {"e", "f"}}
 	expected := []string{"a", "b", "c", "d", "e", "f"}
@@ -16,6 +18,39 @@ func TestConcat(t *testing.T) {
 		t.Fatalf("\nExpected:\t%#v\nActual:\t\t%#v", expected, actual)
 	}
 }
+
+//endregion
+
+//region Indexes
+
+func TestIndexes(t *testing.T) {
+	slice := []string{"item1", "item2", "item3", "item4", "item5"}
+	expected := []int{0, 1, 2, 3, 4}
+	actual := Indexes(slice)
+
+	if !reflect.DeepEqual(expected, actual) {
+		t.Fatalf("\nExpected:\t%#v\nActual:\t\t%#v\n", expected, actual)
+	}
+}
+
+//endregion
+
+//region Prepend
+
+func TestPrepend(t *testing.T) {
+	slice := []string{"b", "c"}
+	item := "a"
+	expected := []string{"a", "b", "c"}
+	actual := Prepend(slice, item)
+
+	if !reflect.DeepEqual(expected, actual) {
+		t.Fatalf("\nExpected:\t%#v\nActual:\t\t%#v", expected, actual)
+	}
+}
+
+//endregion
+
+//region Remove
 
 func TestRemoveBeginning(t *testing.T) {
 	slice := []string{"a", "b", "c", "d"}
@@ -47,6 +82,10 @@ func TestRemoveEnd(t *testing.T) {
 	}
 }
 
+//endregion
+
+//region RemoveEmpty
+
 func TestRemoveEmpty(t *testing.T) {
 	slices := [][]string{{}, {"a", "b"}, {}, {"c"}, {}}
 	expected := [][]string{{"a", "b"}, {"c"}}
@@ -57,16 +96,9 @@ func TestRemoveEmpty(t *testing.T) {
 	}
 }
 
-func TestPrepend(t *testing.T) {
-	slice := []string{"b", "c"}
-	item := "a"
-	expected := []string{"a", "b", "c"}
-	actual := Prepend(slice, item)
+//endregion
 
-	if !reflect.DeepEqual(expected, actual) {
-		t.Fatalf("\nExpected:\t%#v\nActual:\t\t%#v", expected, actual)
-	}
-}
+//region Shift
 
 func TestShiftWithEmpty(t *testing.T) {
 	slice := []string{}
@@ -98,12 +130,4 @@ func TestShiftWithMany(t *testing.T) {
 	}
 }
 
-func TestIndexes(t *testing.T) {
-	slice := []string{"item1", "item2", "item3", "item4", "item5"}
-	expected := []int{0, 1, 2, 3, 4}
-	actual := Indexes(slice)
-
-	if !reflect.DeepEqual(expected, actual) {
-		t.Fatalf("\nExpected:\t%#v\nActual:\t\t%#v\n", expected, actual)
-	}
-}
+//endregion
