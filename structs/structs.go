@@ -14,7 +14,7 @@ func Equals(s1 interface{}, s2 interface{}) bool {
 	t2 := reflect.TypeOf(s2)
 
 	// Verify are structs and have equal field count
-	if !anytypes.IsStruct(s1) || !anytypes.IsStruct(s2) {
+	if !IsStruct(s1) || !IsStruct(s2) {
 		return false
 	} else if r1.NumField() != r2.NumField() {
 		return false
@@ -33,4 +33,9 @@ func Equals(s1 interface{}, s2 interface{}) bool {
 	}
 
 	return true
+}
+
+// Return true if the value given is a struct. Else, false.
+func IsStruct(v any) bool {
+	return anytypes.HasKind(v, "struct")
 }

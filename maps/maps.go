@@ -26,7 +26,7 @@ func Equals[K cmp.Ordered, V cmp.Ordered](m1 map[K]V, m2 map[K]V) bool {
 		return false
 	}
 
-	// Get sorted values for each map, O(nlogn)
+	// Get sorted keys for each map, O(nlogn)
 	keys1 := SortedKeys(m1)
 	keys2 := SortedKeys(m2)
 

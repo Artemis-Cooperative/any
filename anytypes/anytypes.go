@@ -4,12 +4,42 @@ import (
 	"reflect"
 )
 
+//region Public
+
+// Return true if the values given are equal. Else, false.
+// TODO: accomodate structs, slices, arrays, maps and other structures
 func Equals(v1 any, v2 any) bool {
 	return reflect.DeepEqual(v1, v2)
 }
 
-func TypeEquals(v1 any, v2 any) bool {
-	return reflect.TypeOf(v1) == reflect.TypeOf(v2)
+// Panic if the value given is not of the kind given.
+// TODO: Test after collections is rolled out
+func ExpectKind(v any, expected string) {
+	actual := KindString(v)
+
+	if actual != expected {
+		panic("expected a " + expected + ", but received a(n) " + actual)
+	}
+}
+
+// Panic if the value given is not of the type given.
+// TODO: Test after collections is rolled out
+func ExpectType(v any, expected string) {
+	actual := TypeString(v)
+
+	if actual != expected {
+		panic("expected a " + expected + ", but received a(n) " + actual)
+	}
+}
+
+// Return true if the kind of the value given equals the expected kind given. Else, false.
+func HasKind(v any, expected string) bool {
+	return KindString(v) == expected
+}
+
+// Return true if the type of the value given equals the expected type given. Else, false.
+func HasType(v any, expected string) bool {
+	return TypeString(v) == expected
 }
 
 // Return true if the value given is an array. Else, false.
@@ -41,34 +71,6 @@ func IsMap[V any](v V) bool {
 	return isOfReflectKind(v, reflect.Map)
 }
 
-// Return true if the value given is a valid numeric key. Else, false.
-func IsNumKey(v any) bool {
-	switch v := v.(type) {
-	case int:
-		return v > 0
-	case int8:
-		return v > 0
-	case int16:
-		return v > 0
-	case int32:
-		return v > 0
-	case int64:
-		return v > 0
-	case uint:
-		return v > 0
-	case uint8:
-		return v > 0
-	case uint16:
-		return v > 0
-	case uint32:
-		return v > 0
-	case uint64:
-		return v > 0
-	default:
-		return false
-	}
-}
-
 // Return true if the value given adheres to cmp.Ordered. Else, false.
 func IsOrdered(v any) bool {
 	switch v.(type) {
@@ -82,17 +84,27 @@ func IsOrdered(v any) bool {
 	}
 }
 
-// Return true if the value given is a slice. Else, false.
-func IsSlice(v any) bool {
-	return isOfReflectKind(v, reflect.Slice)
+// Return the kind of the value given as a string.
+func KindString(v any) string {
+	return reflect.TypeOf(v).Kind().String()
 }
 
-// Return true if the value given is a struct. Else, false.
-func IsStruct(v any) bool {
-	return isOfReflectKind(v, reflect.Struct)
+// Return true if the values given are of the same type. Else, false.
+func TypeEquals(v1 any, v2 any) bool {
+	return reflect.TypeOf(v1) == reflect.TypeOf(v2)
 }
+
+func TypeString(v any) string {
+	return reflect.TypeOf(v).String()
+}
+
+//endregion
+
+//region Private
 
 // Return true if the value given has a reflect type kind that matches the kind given. Else, false.
 func isOfReflectKind(v any, kind reflect.Kind) bool {
 	return reflect.TypeOf(v).Kind() == kind
 }
+
+//endregion

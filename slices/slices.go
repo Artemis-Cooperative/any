@@ -1,6 +1,9 @@
 package slices
 
 import (
+	"reflect"
+
+	anytypes "github.com/Artemis-Cooperative/types/anytypes"
 	intslices "github.com/Artemis-Cooperative/types/intslices"
 )
 
@@ -15,9 +18,29 @@ func Concat[T any](slices ...[]T) []T {
 	return concatenated
 }
 
+// Panic if the argument given is not a slice
+func ExpectSlice(v any) {
+	anytypes.ExpectKind(v, "slice")
+}
+
+// Return the type of the elements of the slice given
+func ItemType(slice any) reflect.Kind {
+	ExpectSlice(slice)
+
+	return reflect.
+		TypeOf(slice).
+		Elem().
+		Kind()
+}
+
 // Return a sequential list of indexes based on the length of the slice given
 func Indexes[T any](slice []T) []int {
 	return intslices.Seq(0, len(slice)-1)
+}
+
+// Return true if the data given is a slice. Else, false.
+func IsSlice(slice any) bool {
+	return anytypes.HasKind(slice, "slice")
 }
 
 // Prepend the item given to the slice given
