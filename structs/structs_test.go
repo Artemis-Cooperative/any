@@ -7,6 +7,8 @@ import (
 	anytypes "github.com/Artemis-Cooperative/types/anytypes"
 )
 
+var s Structs
+
 type MyStruct struct {
 	A string
 	B int
@@ -47,7 +49,7 @@ func TestEquals(t *testing.T) {
 		Field2: "2",
 	}
 	expected := true
-	actual := Equals(testStruct, testStruct)
+	actual := s.Equals(testStruct, testStruct)
 
 	if expected != actual {
 		t.Fatalf("\nExpected:\t%v\nActual:\t\t%v\n", expected, actual)
@@ -64,7 +66,7 @@ func TestNotEqualsDifferentTypes(t *testing.T) {
 		Field2: 2,
 	}
 	expected := false
-	actual := Equals(originalStruct, differentFieldTypesStruct)
+	actual := s.Equals(originalStruct, differentFieldTypesStruct)
 
 	if expected != actual {
 		t.Fatalf("\nExpected:\t%v\nActual:\t\t%v\n", expected, actual)
@@ -81,7 +83,7 @@ func TestNotEqualsDifferentNames(t *testing.T) {
 		Field4: "2",
 	}
 	expected := false
-	actual := Equals(originalStruct, differentFieldNamesStruct)
+	actual := s.Equals(originalStruct, differentFieldNamesStruct)
 
 	if expected != actual {
 		t.Fatalf("\nExpected:\t%v\nActual:\t\t%v\n", expected, actual)
@@ -99,7 +101,7 @@ func TestNotEqualsMoreFields(t *testing.T) {
 		Field3: "3",
 	}
 	expected := false
-	actual := Equals(originalStruct, moreFieldssStruct)
+	actual := s.Equals(originalStruct, moreFieldssStruct)
 
 	if expected != actual {
 		t.Fatalf("\nExpected:\t%v\nActual:\t\t%v\n", expected, actual)
@@ -115,7 +117,7 @@ func TestNotEqualsLessFields(t *testing.T) {
 		Field1: 1,
 	}
 	expected := false
-	actual := Equals(originalStruct, lessFieldsStruct)
+	actual := s.Equals(originalStruct, lessFieldsStruct)
 
 	if expected != actual {
 		t.Fatalf("\nExpected:\t%v\nActual:\t\t%v\n", expected, actual)
@@ -136,7 +138,7 @@ func TestIsStruct(t *testing.T) {
 	// Set expected and actual values
 	for _, v := range typedValues {
 		expected = append(expected, true)
-		actual = append(actual, IsStruct(v))
+		actual = append(actual, s.IsStruct(v))
 	}
 
 	// Test actual values against expected
@@ -179,7 +181,7 @@ func TestIsNotStruct(t *testing.T) {
 	// Set expected and actual values
 	for _, v := range typedValues {
 		expected = append(expected, false)
-		actual = append(actual, IsStruct(v))
+		actual = append(actual, s.IsStruct(v))
 	}
 
 	// Test actual values against expected
